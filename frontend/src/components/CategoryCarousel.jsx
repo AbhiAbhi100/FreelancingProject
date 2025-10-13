@@ -12,11 +12,11 @@ import { useNavigate } from "react-router-dom";
 import { setSearchedQuery } from "@/redux/projectSlice";
 
 const category = [
-  "Frontend Developer",
-  "Backend Developer",
-  "Data Science",
-  "Graphic Designer",
-  "FullStack Developer",
+  "Photographer",
+  "Bodyguard",
+  "Anchor",
+  "Model",
+  "Makeup Artist",
 ];
 
 const CategoryCarousel = () => {

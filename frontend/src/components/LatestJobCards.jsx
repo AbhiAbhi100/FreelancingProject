@@ -25,7 +25,7 @@ const LatestJobCards = ({ project }) => {
           {project?.projectType}
         </Badge>
         <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-          ${project?.budget}
+          ₹{project?.budget}
         </Badge>
       </div>
     </div>
