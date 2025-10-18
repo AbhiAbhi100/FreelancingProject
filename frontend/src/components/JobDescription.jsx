@@ -81,9 +81,10 @@ const JobDescription = () => {
               {singleProject?.projectType}
             </Badge>
             <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-              ${singleProject?.budget}
+              ₹{singleProject?.budget}
             </Badge>
           </div>
+
         </div>
         <Button
           onClick={isApplied ? null : submitProposalHandler}
@@ -128,7 +129,8 @@ const JobDescription = () => {
         <h1 className="font-bold my-1">
           Budget:{" "}
           <span className="pl-4 font-normal text-gray-800">
-            ${singleProject?.budget}
+            ₹
+{singleProject?.budget}
           </span>
         </h1>
         <h1 className="font-bold my-1">
