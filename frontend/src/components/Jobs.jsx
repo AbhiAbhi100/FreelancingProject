@@ -10,23 +10,66 @@ import { motion } from "framer-motion";
 const Jobs = () => {
   const { allProjects, searchedQuery } = useSelector((store) => store.project);
   const [filterProjects, setFilterProjects] = useState(allProjects);
+  const [locationFilter, setLocationFilter] = useState("");
+  const [industryFilter, setIndustryFilter] = useState("");
+  const [budgetFilter, setBudgetFilter] = useState("");
 
   useEffect(() => {
+    let filteredProjects = allProjects;
+
+    // Apply search query filter
     if (searchedQuery) {
-      const filteredProjects = allProjects.filter((project) => {
+      filteredProjects = filteredProjects.filter((project) => {
         return (
           project.title.toLowerCase().includes(searchedQuery.toLowerCase()) ||
           project.description
             .toLowerCase()
-            .includes(searchedQuery.toLowerCase()) ||
-          project.location.toLowerCase().includes(searchedQuery.toLowerCase())
+            .includes(searchedQuery.toLowerCase())
         );
       });
-      setFilterProjects(filteredProjects);
-    } else {
-      setFilterProjects(allProjects);
     }
-  }, [allProjects, searchedQuery]);
+
+    // Apply location filter
+    if (locationFilter) {
+      filteredProjects = filteredProjects.filter((project) => {
+        return project.location
+          .toLowerCase()
+          .includes(locationFilter.toLowerCase());
+      });
+    }
+
+    // Apply industry filter (projectType)
+    if (industryFilter) {
+      filteredProjects = filteredProjects.filter((project) => {
+        return project.projectType
+          .toLowerCase()
+          .includes(industryFilter.toLowerCase());
+      });
+    }
+
+    // Apply budget filter
+    if (budgetFilter) {
+      filteredProjects = filteredProjects.filter((project) => {
+        const budget = project.budget;
+        if (budgetFilter === "0-40k") {
+          return budget >= 0 && budget <= 40000;
+        } else if (budgetFilter === "42-1lakh") {
+          return budget > 40000 && budget <= 100000;
+        } else if (budgetFilter === "1lakh to 5lakh") {
+          return budget > 100000 && budget <= 500000;
+        }
+        return true;
+      });
+    }
+
+    setFilterProjects(filteredProjects);
+  }, [
+    allProjects,
+    searchedQuery,
+    locationFilter,
+    industryFilter,
+    budgetFilter,
+  ]);
 
   return (
     <div>
@@ -34,7 +77,11 @@ const Jobs = () => {
       <div className="max-w-7xl mx-auto mt-5">
         <div className="flex gap-5">
           <div className="w-20%">
-            <FilterCard />
+            <FilterCard
+              setLocationFilter={setLocationFilter}
+              setIndustryFilter={setIndustryFilter}
+              setBudgetFilter={setBudgetFilter}
+            />
           </div>
           {filterProjects.length <= 0 ? (
             <span>Project not found</span>
