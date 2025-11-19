@@ -19,6 +19,7 @@ app.use(cookieParser());
 const corsOptions = {
   origin: [
     "http://localhost:5173", // for development
+    "https://freelancing-7gjnuj3t2-abhinav-singhs-projects-ecc4bd85.vercel.app", // production frontend
     process.env.FRONTEND_URL || "http://localhost:5173", // for production
   ],
   credentials: true,
