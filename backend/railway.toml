@@ -1,0 +1,11 @@
+# Railway Deployment Configuration
+
+# Build and start commands for Railway
+build = "npm install"
+start = "npm start"
+
+# Port configuration
+PORT = 3000
+
+# Health check
+healthcheck = "/api/v1/user/health"

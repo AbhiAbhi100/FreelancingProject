@@ -17,13 +17,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173", // for development
+    process.env.FRONTEND_URL || "http://localhost:5173", // for production
+  ],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 3000;
+
+// Health check endpoint for deployment platforms
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "Freelancing Project Backend is running",
+    timestamp: new Date().toISOString(),
+  });
+});
 
 // api's
 app.use("/api/v1/user", userRoute);
